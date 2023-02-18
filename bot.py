@@ -51,7 +51,6 @@ async def main():
     register_all_filters(dp)
     register_all_handlers(dp)
 
-
     # start
     try:
         await dp.start_polling()
