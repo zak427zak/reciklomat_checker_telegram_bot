@@ -5,8 +5,8 @@ from tgbot.services.register_new_user import register_new_user
 
 
 async def admin_start(message: Message):
-    register_new_user(message.from_user.id)
-    await message.reply("Привет, админ!")
+    register_new_user(message)
+    await message.reply(f"Привет, админ!")
 
 
 def register_admin(dp: Dispatcher):
