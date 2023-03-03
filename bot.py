@@ -11,6 +11,7 @@ from tgbot.handlers.admin import register_admin
 from tgbot.handlers.check_status import register_check_status
 from tgbot.handlers.echo import register_echo
 from tgbot.handlers.get_all import register_all_status
+from tgbot.handlers.help import register_help
 from tgbot.handlers.switch_subscribe import register_switch
 from tgbot.handlers.test_inline import register_show_items
 from tgbot.handlers.user import register_user
@@ -34,6 +35,7 @@ def register_all_handlers(dp):
     register_all_status(dp)
     register_switch(dp)
     register_show_items(dp)
+    register_help(dp)
     register_echo(dp)
 
 
