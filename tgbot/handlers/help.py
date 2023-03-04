@@ -4,7 +4,7 @@ from aiogram.types import Message
 
 async def user_help(message: Message):
     await message.answer(
-        f"Пожелания, предложения и иная обратная связь - @German_goncharov\n\nP.S. Бот находится в открытом доступе, с радостью приму ваши реквесты здесь https://github.com/zak427zak/reciklomat_checker_telegram_bot",
+        f"Пожелания, предложения и иная обратная связь - @German_goncharov\n\nP.S. Бот находится в открытом доступе, исходный код проекта https://github.com/zak427zak/reciklomat_checker_telegram_bot",
         disable_web_page_preview=True)
 
 
