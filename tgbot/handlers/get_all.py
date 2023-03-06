@@ -5,8 +5,9 @@ from tgbot.services.check import check
 
 
 async def get_all_status(message: Message):
-    resp, code = check(message.from_user.id, "all")
-    await message.answer(resp)
+    resp = check(message.from_user.id, "all")
+    for item in resp:
+        await message.answer(text=item['text'])
 
 
 def register_all_status(dp: Dispatcher):

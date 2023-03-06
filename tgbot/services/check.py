@@ -12,6 +12,6 @@ def check(user_id, how_many):
     data = {"userId": user_id, "howMany": how_many}
     r = requests.post(url, headers=headers, data=data)
     if r.status_code == 200:
-        return r.json()['result'], r.status_code
+        return r.json()
     else:
-        return r.json()['errorMessage'], r.status_code
+        return r.json()
