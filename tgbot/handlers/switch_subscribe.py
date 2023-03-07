@@ -6,17 +6,17 @@ from tgbot.services.switch import switch_notifications
 
 
 async def turn_on(message: Message):
-    resp, code = switch_notifications(message.from_user.id, "on")
+    resp = switch_notifications(message.from_user.id, "on")
     await message.answer(resp)
 
 
 async def turn_off(message: Message):
-    resp, code = switch_notifications(message.from_user.id, "off")
+    resp = switch_notifications(message.from_user.id, "off")
     await message.answer(resp)
 
 
 async def turn_status(message: Message):
-    resp, code = status_notifications(message.from_user.id)
+    resp = status_notifications(message)
     await message.answer(resp)
 
 

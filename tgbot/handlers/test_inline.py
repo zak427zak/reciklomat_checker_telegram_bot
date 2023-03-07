@@ -7,9 +7,9 @@ from tgbot.services.manage_wishlist import add_or_remove_from_wishlist
 
 
 async def show_wishlist(message: Message):
-    new_keyboard = create_new_keyboard(message.from_user.id)
+    new_keyboard, text = create_new_keyboard(message.from_user.id)
     await message.answer(
-        "Вот список всех рецикломатов:\n\n✅ - уже в вашем вишлисте\n⛔ - нет в вашем вишлисте\n\nНажмите на нужный рекицломат, чтобы добавить или удалить его из вишлиста.",
+        text,
         reply_markup=new_keyboard)
 
 
@@ -17,7 +17,7 @@ async def choose_reciklomat(call: CallbackQuery, callback_data: dict):
     await call.answer(cache_time=60)
     address = callback_data.get("address")
     add_or_remove_from_wishlist(call.from_user.id, address)
-    new_keyboard = create_new_keyboard(call.from_user.id)
+    new_keyboard, text = create_new_keyboard(call.from_user.id)
     await call.message.edit_reply_markup(new_keyboard)
 
 

@@ -5,7 +5,7 @@ from tgbot.services.register_new_user import register_new_user
 
 
 async def admin_start(message: Message):
-    register_new_user(message)
+    register_new_user(message, message.from_user.locale.language)
     await message.reply(f"Привет, админ!")
 
 

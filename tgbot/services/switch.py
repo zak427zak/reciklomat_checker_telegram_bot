@@ -12,6 +12,6 @@ def switch_notifications(user_id, switch_type):
     data = {"userId": user_id}
     r = requests.post(url, headers=headers, data=data)
     if r.status_code == 200:
-        return r.json()['result'], r.status_code
+        return r.json()['result']
     else:
-        return r.json()['errorMessage'], r.status_code
+        return r.json()['errorMessage']

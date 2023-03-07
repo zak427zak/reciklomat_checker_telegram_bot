@@ -1,11 +1,12 @@
 from aiogram import Dispatcher
 from aiogram.types import Message
 
+from tgbot.services.get_answer_service import get_user_help
+
 
 async def user_help(message: Message):
-    await message.answer(
-        f"Пожелания, предложения и иная обратная связь - @German_goncharov\n\nP.S. Бот находится в открытом доступе, исходный код проекта https://github.com/zak427zak/reciklomat_checker_telegram_bot",
-        disable_web_page_preview=True)
+    get_answer = get_user_help(message)
+    await message.answer(get_answer, disable_web_page_preview=True)
 
 
 def register_help(dp: Dispatcher):
