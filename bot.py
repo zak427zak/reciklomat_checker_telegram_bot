@@ -7,18 +7,15 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 
 from tgbot.config import load_config
 from tgbot.filters.admin import AdminFilter
-from tgbot.handlers.admin import register_admin
-from tgbot.handlers.check_status import register_check_status
-from tgbot.handlers.echo import register_echo
-from tgbot.handlers.get_all import register_all_status
+from tgbot.handlers.all_reciklomats import register_all_reciklomats
 from tgbot.handlers.help import register_help
-from tgbot.handlers.start_with_language import register_user
-from tgbot.handlers.switch_subscribe import register_switch
-from tgbot.handlers.test_inline import register_show_items
-from tgbot.handlers.user import register_intro
+from tgbot.handlers.manage_subscription import register_manage_subscription
+from tgbot.handlers.manage_wishlist import register_manage_wishlist
+from tgbot.handlers.my_reciklomats import register_my_reciklomats
+from tgbot.handlers.set_language import register_set_language
+from tgbot.handlers.start import register_start
 from tgbot.middlewares.environment import EnvironmentMiddleware
 
-# nest_asyncio.apply()
 logger = logging.getLogger(__name__)
 
 
@@ -31,15 +28,13 @@ def register_all_filters(dp):
 
 
 def register_all_handlers(dp):
-    register_admin(dp)
-    register_user(dp)
-    register_intro(dp)
-    register_check_status(dp)
-    register_all_status(dp)
-    register_switch(dp)
-    register_show_items(dp)
+    register_start(dp)
+    register_my_reciklomats(dp)
+    register_all_reciklomats(dp)
+    register_manage_wishlist(dp)
+    register_manage_subscription(dp)
+    register_set_language(dp)
     register_help(dp)
-    register_echo(dp)
 
 
 async def main():
@@ -54,9 +49,6 @@ async def main():
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
     dp = Dispatcher(bot, storage=storage)
 
-    # loop = asyncio.get_event_loop()
-    # db = loop.run_until_complete(ExternalDatabase.create())
-
     bot['config'] = config
 
     register_all_middlewares(dp, config)
@@ -64,7 +56,6 @@ async def main():
     register_all_handlers(dp)
 
     # start
-    # await db.create()
     try:
         await dp.start_polling()
     finally:

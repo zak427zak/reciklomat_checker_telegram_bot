@@ -9,4 +9,7 @@ def get_user_help(message):
     headers = {'Authorization': f'Bearer {config.tg_bot.server_token}'}
     data = {"userId": message.from_user.id}
     r = requests.post(url, headers=headers, data=data)
-    return r.json()['errorMessage']
+    if r.status_code == 200:
+        return r.json()['result']
+    else:
+        return r.json()['errorMessage']

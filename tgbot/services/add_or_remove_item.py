@@ -3,7 +3,7 @@ import requests
 from tgbot.config import load_config
 
 
-def add_or_remove_from_wishlist(user_id, address):
+def add_or_remove_item_service(user_id, address):
     config = load_config(".env")
     url = f"https://services.llqq.ru/reciklomat/user/subscribe"
     headers = {'Authorization': f'Bearer {config.tg_bot.server_token}'}
