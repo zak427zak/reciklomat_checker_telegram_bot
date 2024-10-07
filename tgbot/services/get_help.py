@@ -1,12 +1,9 @@
 import requests
 
-from tgbot.config import load_config
-
 
 def get_user_help(message):
-    config = load_config(".env")
-    url = f"https://services.llqq.ru/reciklomat/help"
-    headers = {'Authorization': f'Bearer {config.tg_bot.server_token}'}
+    url = f"http://reciklomat_api:8000/help"
+    headers = {'Content-Type': 'application/json'}
     data = {"userId": message.from_user.id}
     r = requests.post(url, headers=headers, data=data)
     if r.status_code == 200:

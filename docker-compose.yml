@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  reciklomat_tg_bot:
+    image: "bot"
+    build:
+      context: .
+    working_dir: "/usr/src/app/bot"
+    volumes:
+      - .:/usr/src/app/bot
+    command: python3 -m bot
+    deploy:
+      restart_policy:
+        condition: any
+    env_file:
+      - ".env"
+    ports:
+      - "8086:80"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    depends_on:
+      - reciklomat_mysql
+
+  reciklomat_api:
+    image: "api"
+    build:
+      context: ./infrastructure/api
+    working_dir: "/usr/src/app/api"
+    volumes:
+      - .:/usr/src/app/api
+    command: ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "infrastructure.api.app:app"]
+    deploy:
+      restart_policy:
+        condition: any
+    env_file:
+      - ".env"
+    ports:
+      - "8087:8000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    depends_on:
+      - reciklomat_mysql
+
+
+  reciklomat_mysql:
+    image: "mysql:8.0"
+    env_file:
+      - ".env"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db_conf.cnf:/etc/mysql/conf.d/db_conf.cnf
+      - ./db_init.sql:/docker-entrypoint-initdb.d/db_init.sql
+    deploy:
+      restart_policy:
+        condition: any
+
+volumes:
+  mysql_data:

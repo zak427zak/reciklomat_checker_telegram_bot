@@ -9,6 +9,35 @@ class DbConfig:
     password: str
     user: str
     database: str
+    port: int
+
+    # For SQLAlchemy
+    def construct_sqlalchemy_url(self, driver="pymysql", host=None, port=None) -> str:
+        """
+        Constructs and returns a SQLAlchemy URL for this database configuration.
+        """
+        from sqlalchemy.engine.url import URL
+
+        if not host:
+            host = self.host
+        if not port:
+            port = self.port
+
+        uri = URL.create(drivername=f"mysql+{driver}", username=self.user, password=self.password, host=host, port=port,
+            database=self.database, )
+        return uri.render_as_string(hide_password=False)
+
+    @staticmethod
+    def from_env(env: Env):
+        """
+        Creates the DbConfig object from environment variables.
+        """
+        host = env.str("MYSQL_HOST")
+        password = env.str("MYSQL_PASSWORD")
+        user = env.str("MYSQL_USER")
+        database = env.str("MYSQL_DATABASE")
+        port = env.int("MYSQL_PORT")
+        return DbConfig(host=host, password=password, user=user, database=database, port=port)
 
 
 @dataclass
@@ -35,18 +64,7 @@ def load_config(path: str = None):
     env = Env()
     env.read_env(path)
 
-    return Config(
-        tg_bot=TgBot(
-            token=env.str("BOT_TOKEN"),
-            admin_ids=env.int("ADMINS"),
-            use_redis=env.bool("USE_REDIS"),
-            server_token=env.str("SERVER_TOKEN")
-        ),
-        db=DbConfig(
-            host=env.str('DB_HOST'),
-            password=env.str('DB_PASS'),
-            user=env.str('DB_USER'),
-            database=env.str('DB_NAME')
-        ),
-        misc=Miscellaneous()
-    )
+    return Config(tg_bot=TgBot(token=env.str("BOT_TOKEN"), admin_ids=env.int("ADMINS"), use_redis=env.bool("USE_REDIS"),
+        server_token=env.str("SERVER_TOKEN")),
+        db=DbConfig(host=env.str('MYSQL_HOST'), password=env.str('MYSQL_PASSWORD'), user=env.str('MYSQL_USER'),
+            database=env.str('MYSQL_DATABASE'), port=env.int('MYSQL_PORT'), ), misc=Miscellaneous())
