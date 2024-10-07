@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.DEBUG,  # Уровень логировани�
 
 # Настройка базы данных из переменных окружения
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL',
-                                                  'mysql+pymysql://reciklomat_adm:25HE3V2DXE6defwx3GS66N@reciklomat_mysql:3306/reciklomat')
+                                                  'mysql+pymysql://reciklomat_adm:25HE3V2DXE6defwx3GS66N@reciklomat_mysql:3309/reciklomat')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Инициализируем базу данных с приложением
