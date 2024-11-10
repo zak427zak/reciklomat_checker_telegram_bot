@@ -15,7 +15,7 @@ services:
     env_file:
       - ".env"
     ports:
-      - "8090:80"
+      - "8092:80"
     logging:
       driver: "json-file"
       options:
@@ -38,7 +38,7 @@ services:
     env_file:
       - ".env"
     ports:
-      - "8091:8000"
+      - "8093:8000"
     logging:
       driver: "json-file"
       options:
