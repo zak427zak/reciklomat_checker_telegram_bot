@@ -3,6 +3,9 @@ flask_sqlalchemy
 cryptography
 environs
 gunicorn
+requests
+Babel
+Flask-Babel
 
 sqlalchemy~=2.0
 alembic~=1.0

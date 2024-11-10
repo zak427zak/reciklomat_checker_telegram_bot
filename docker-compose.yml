@@ -15,7 +15,7 @@ services:
     env_file:
       - ".env"
     ports:
-      - "8086:80"
+      - "8090:80"
     logging:
       driver: "json-file"
       options:
@@ -31,14 +31,14 @@ services:
     working_dir: "/usr/src/app/api"
     volumes:
       - .:/usr/src/app/api
-    command: ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "infrastructure.api.app:app"]
+    command: [ "gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "infrastructure.api.app:app" ]
     deploy:
       restart_policy:
         condition: any
     env_file:
       - ".env"
     ports:
-      - "8087:8000"
+      - "8091:8000"
     logging:
       driver: "json-file"
       options:
@@ -46,7 +46,6 @@ services:
         max-file: "10"
     depends_on:
       - reciklomat_mysql
-
 
   reciklomat_mysql:
     image: "mysql:8.0"

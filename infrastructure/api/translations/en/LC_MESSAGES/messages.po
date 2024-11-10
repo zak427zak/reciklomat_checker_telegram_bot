@@ -1,0 +1,615 @@
+# English translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-01-04 13:13+0100\n"
+"PO-Revision-Date: 2023-03-06 12:54+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: app/__init__.py:24
+msgid "Надо залогиниться"
+msgstr ""
+
+#: app/translate.py:23
+msgid "Error: the translation service is not configured."
+msgstr ""
+
+#: app/translate.py:30
+msgid "Error: the translation service failed."
+msgstr ""
+
+#: app/auth/email.py:8
+msgid "[Microblog] Reset Your Password"
+msgstr ""
+
+#: app/auth/forms.py:9 app/auth/forms.py:16 app/main/forms.py:10
+msgid "Username"
+msgstr ""
+
+#: app/auth/forms.py:10 app/auth/forms.py:18 app/auth/forms.py:41
+msgid "Password"
+msgstr ""
+
+#: app/auth/forms.py:11
+msgid "Remember Me"
+msgstr ""
+
+#: app/auth/forms.py:12
+msgid "Войти"
+msgstr ""
+
+#: app/auth/forms.py:17 app/auth/forms.py:36 app/dashboard/forms.py:56
+msgid "Email"
+msgstr ""
+
+#: app/auth/forms.py:20 app/auth/forms.py:43
+msgid "Repeat Password"
+msgstr ""
+
+#: app/auth/forms.py:22 app/auth/routes.py:50
+#: app/templates/auth/register.html:5
+msgid "Register"
+msgstr ""
+
+#: app/auth/forms.py:27 app/main/forms.py:23
+msgid "Please use a different username."
+msgstr ""
+
+#: app/auth/forms.py:32
+msgid "Please use a different email address."
+msgstr ""
+
+#: app/auth/forms.py:37 app/auth/forms.py:45
+msgid "Request Password Reset"
+msgstr ""
+
+#: app/auth/routes.py:21
+msgid "Invalid username or password"
+msgstr ""
+
+#: app/auth/routes.py:28
+msgid "Sign In"
+msgstr ""
+
+#: app/auth/routes.py:48
+msgid "Congratulations, you are now a registered user!"
+msgstr ""
+
+#: app/auth/routes.py:64
+msgid "Check your email for the instructions to reset your password"
+msgstr ""
+
+#: app/auth/routes.py:67 app/templates/auth/reset_password_request.html:5
+msgid "Reset Password"
+msgstr ""
+
+#: app/auth/routes.py:81
+msgid "Your password has been reset."
+msgstr ""
+
+#: app/dashboard/forms.py:9
+msgid "Имя"
+msgstr ""
+
+#: app/dashboard/forms.py:10
+msgid "Фамилия"
+msgstr ""
+
+#: app/dashboard/forms.py:11
+msgid "Отчество"
+msgstr ""
+
+#: app/dashboard/forms.py:12 app/dashboard/forms.py:54
+msgid "Телефон"
+msgstr ""
+
+#: app/dashboard/forms.py:13
+msgid "Почта"
+msgstr ""
+
+#: app/dashboard/forms.py:15 app/dashboard/forms.py:59
+msgid "ЖК"
+msgstr ""
+
+#: app/dashboard/forms.py:16 app/dashboard/forms.py:60
+msgid "Квартира"
+msgstr ""
+
+#: app/dashboard/forms.py:18 app/dashboard/forms.py:62
+msgid "Дата сделки"
+msgstr ""
+
+#: app/dashboard/forms.py:19 app/dashboard/forms.py:63
+msgid "Стоимость сделки"
+msgstr ""
+
+#: app/dashboard/forms.py:20 app/dashboard/forms.py:64
+msgid "Формат сделки"
+msgstr ""
+
+#: app/dashboard/forms.py:21 app/dashboard/forms.py:57
+msgid "Менеджер"
+msgstr ""
+
+#: app/dashboard/forms.py:23
+msgid "Создать клиента"
+msgstr ""
+
+#: app/dashboard/forms.py:27 app/dashboard/forms.py:34
+msgid "Заголовок"
+msgstr ""
+
+#: app/dashboard/forms.py:28 app/dashboard/forms.py:35
+msgid "Текст"
+msgstr ""
+
+#: app/dashboard/forms.py:29 app/dashboard/forms.py:38
+msgid "Base64"
+msgstr ""
+
+#: app/dashboard/forms.py:30 app/dashboard/forms.py:39
+msgid "Тип"
+msgstr ""
+
+#: app/dashboard/forms.py:31
+msgid "Создать Push-уведомление"
+msgstr ""
+
+#: app/dashboard/forms.py:36
+msgid "Ссылка"
+msgstr ""
+
+#: app/dashboard/forms.py:37
+msgid "Актуально до"
+msgstr ""
+
+#: app/dashboard/forms.py:40
+msgid "Создать промо для пользователя"
+msgstr ""
+
+#: app/dashboard/forms.py:43 app/dashboard/forms.py:48
+msgid "Vars"
+msgstr ""
+
+#: app/dashboard/forms.py:44 app/dashboard/forms.py:49
+msgid "Types"
+msgstr ""
+
+#: app/dashboard/forms.py:45 app/dashboard/forms.py:50
+msgid "Изменить"
+msgstr ""
+
+#: app/dashboard/forms.py:53
+msgid "ФИО"
+msgstr ""
+
+#: app/dashboard/forms.py:55
+msgid "Тип клиента"
+msgstr ""
+
+#: app/dashboard/forms.py:58
+msgid "Код аккаунта"
+msgstr ""
+
+#: app/dashboard/forms.py:61
+msgid "Отделка"
+msgstr ""
+
+#: app/dashboard/forms.py:65
+msgid "Сохранить изменения"
+msgstr ""
+
+#: app/dashboard/routes.py:73
+msgid "AKTIER | Панель управления"
+msgstr ""
+
+#: app/dashboard/routes.py:152
+msgid "AKTIER | Диалоги"
+msgstr ""
+
+#: app/dashboard/routes.py:160
+msgid "AKTIER | Кампании"
+msgstr ""
+
+#: app/dashboard/routes.py:166
+msgid "AKTIER | Аналитика"
+msgstr ""
+
+#: app/main/forms.py:11
+msgid "About me"
+msgstr ""
+
+#: app/main/forms.py:13 app/main/forms.py:32 app/main/forms.py:49
+msgid "Submit"
+msgstr ""
+
+#: app/main/forms.py:31
+msgid "Say something"
+msgstr ""
+
+#: app/main/forms.py:36 app/main/routes.py:176
+msgid "Search"
+msgstr ""
+
+#: app/main/forms.py:47
+msgid "Message"
+msgstr ""
+
+#: app/main/routes.py:37 app/main/routes.py:221
+msgid "Exporting posts..."
+msgstr ""
+
+#: app/main/routes.py:64 app/templates/base.html:22
+msgid "Explore"
+msgstr ""
+
+#: app/main/routes.py:101
+msgid "Your changes have been saved."
+msgstr ""
+
+#: app/main/routes.py:106 app/templates/edit_profile.html:5
+msgid "Edit Profile"
+msgstr ""
+
+#: app/main/routes.py:117 app/main/routes.py:137
+#, python-format
+msgid "User %(username)s not found."
+msgstr ""
+
+#: app/main/routes.py:120
+msgid "You cannot follow yourself!"
+msgstr ""
+
+#: app/main/routes.py:124
+#, python-format
+msgid "You are following %(username)s!"
+msgstr ""
+
+#: app/main/routes.py:140
+msgid "You cannot unfollow yourself!"
+msgstr ""
+
+#: app/main/routes.py:144
+#, python-format
+msgid "You are not following %(username)s."
+msgstr ""
+
+#: app/main/routes.py:152
+msgid "Вы выключили свет"
+msgstr "You are turning off the light"
+
+#: app/main/routes.py:191
+msgid "Your message has been sent."
+msgstr ""
+
+#: app/main/routes.py:193
+msgid "Send Message"
+msgstr ""
+
+#: app/main/routes.py:219
+msgid "An export task is currently in progress"
+msgstr ""
+
+#: app/reciklomat/routes.py:37
+msgid "На паузе (не работает)"
+msgstr "On pause (not working)"
+
+#: app/reciklomat/routes.py:38
+msgid "Заполнен"
+msgstr "Filled"
+
+#: app/reciklomat/routes.py:39
+msgid "Что-то застряло (не работает)"
+msgstr "Something stuck (not working)"
+
+#: app/reciklomat/routes.py:40
+msgid "На обслуживании"
+msgstr "In service"
+
+#: app/reciklomat/routes.py:41
+msgid "Работает"
+msgstr "Works"
+
+#: app/reciklomat/routes.py:42
+msgid "Выключен"
+msgstr "Switched off"
+
+#: app/reciklomat/routes.py:66
+msgid "Рецикломат свободен!"
+msgstr "Recycler is available!"
+
+#: app/reciklomat/routes.py:67 app/reciklomat/routes.py:231
+msgid "Заполнено:"
+msgstr "Filled:"
+
+#: app/reciklomat/routes.py:68 app/reciklomat/routes.py:232
+msgid "Осталось места:"
+msgstr "Remaining places:"
+
+#: app/reciklomat/routes.py:69
+msgid " из "
+msgstr " out of "
+
+#: app/reciklomat/routes.py:161
+msgid "Язык успешно изменен"
+msgstr "Language changed successfully"
+
+#: app/reciklomat/routes.py:184
+msgid ""
+"Привет! Это бот для проверки статусов рецикломатов в Белграде (Сербия).\n"
+"\n"
+"Бот позволяет проверять заполненность всех рецикломатов в реальном "
+"времени - команда /all\n"
+"\n"
+"А ещё можно собрать свой вишлист рецикломатов, которые бот будет "
+"отслеживать. Если один из рецикломатов в вашем вишлисте изменит статус на"
+" освободился - вы тут же получите уведомление.\n"
+"\n"
+"Для работы с вишлистом используйте /wishlist\n"
+"Проверить статус рецикломатов в вишлисте можно командой /check\n"
+"\n"
+"Другие доступные команды вы найдете в меню"
+msgstr ""
+"Hello! This is a bot for checking the status of recycling machines in "
+"Belgrade (Serbia).\n"
+"\n"
+"The bot allows you to check the fullness of all recycling machines in "
+"real time - the /all\n"
+"\n"
+"command can also collect your wishlist of recycling machines that the bot"
+" will track. If one of the recyclomats in your wishlist changes its "
+"status to free, you will immediately receive a notification.\n"
+"\n"
+"To work with the wishlist, use /wishlist\n"
+"You can check the status of the recyclomats in the wishlist with the "
+"/check command\n"
+"\n"
+"Other available commands can be found in the menu"
+
+#: app/reciklomat/routes.py:199 app/reciklomat/routes.py:247
+msgid "Пользователя не существует! Попробуйте ещё раз, или вернитесь позже!"
+msgstr "The user does not exist! Try again or come back later!"
+
+#: app/reciklomat/routes.py:230
+msgid "Статус рецикломата:"
+msgstr "Recyclomat status:"
+
+#: app/reciklomat/routes.py:233
+msgid "из"
+msgstr "out of"
+
+#: app/reciklomat/routes.py:244
+msgid ""
+"Ваш вишлист ещё пуст. Сначала добавите в него рецикломаты - "
+"воспользуйтесь командой /wishlist"
+msgstr ""
+"Your wishlist is still empty. First, add recyclomats to it with the "
+"command /wishlist"
+
+#: app/reciklomat/routes.py:256
+msgid ""
+"Не можем найти вас в системе. Напишите что-нибудь боту, чтобы он "
+"авторизовал вас"
+msgstr ""
+"We can't find you in the system. Write something to the bot to authorize "
+"you"
+
+#: app/reciklomat/routes.py:263
+msgid ""
+"Вот список всех рецикломатов:\n"
+"\n"
+"✅ - уже в вашем вишлисте\n"
+"⛔ - нет в вашем вишлисте\n"
+"\n"
+"Нажмите на нужный рекицломат, чтобы добавить или удалить его из вишлиста"
+msgstr ""
+"Here is a list of all recyclers:\n"
+"\n"
+"✅ - already on your wishlist\n"
+"⛔ - not on your wishlist\n"
+"\n"
+"Click on the required recycler to add or remove it from your wishlist"
+
+#: app/reciklomat/routes.py:283
+msgid ""
+"Сейчас подписка на статусы ваших рецикломатов включена.\n"
+"\n"
+"Вы будете получать уведомления, как только один из них освободится"
+msgstr ""
+"Subscription to the statuses of your recyclomats is now enabled.\n"
+"\n"
+"You will be notified as soon as one of them becomes available"
+
+#: app/reciklomat/routes.py:287
+msgid ""
+"Сейчас подписка на статусы ваших рецикломатов отключена.\n"
+"\n"
+"Вы НЕ будете получать уведомления, как только один из них освободится"
+msgstr ""
+"Subscribing to the statuses of your recyclomats is currently disabled.\n"
+"\n"
+"You will NOT be notified once one of them is released"
+
+#: app/reciklomat/routes.py:308
+msgid ""
+"Вы отключили подписку на изменение статусов ваших рецикломатов (которые в"
+" вишлисте)"
+msgstr ""
+"You have disabled the subscription to change the status of your recyclers"
+" (which are in the wishlist)"
+
+#: app/reciklomat/routes.py:313
+msgid ""
+"Вы включили подписку на изменение статусов ваших рецикломатов (которые в "
+"вишлисте)"
+msgstr ""
+"You have enabled the subscription to change the status of your recyclers "
+"(which are in the wishlist)"
+
+#: app/reciklomat/routes.py:323
+msgid ""
+"Пожелания, предложения и иная обратная связь - @German_goncharov\n"
+"\n"
+"P.S. Бот находится в открытом доступе, исходный код проекта <a "
+"href='https://github.com/zak427zak/reciklomat_checker_telegram_bot'>на "
+"GitHub</a>"
+msgstr ""
+"Wishes, suggestions and other feedback - @German_goncharov\n"
+"\n"
+"P.S. The bot is in the public domain, the source code of the project <a "
+"href='https://github.com/zak427zak/reciklomat_checker_telegram_bot'>on "
+"GitHub</a>"
+
+#: app/reciklomat/routes.py:325
+#, fuzzy
+msgid "Пользователя не существует! Попробуйте ещё раз или вернитесь позже!"
+msgstr "The user does not exist! Try again or come back later!"
+
+#: app/templates/_post.html:16
+#, python-format
+msgid "%(username)s said %(when)s"
+msgstr ""
+
+#: app/templates/_post.html:27
+msgid "Translate"
+msgstr ""
+
+#: app/templates/base.html:4
+msgid "Welcome to Microblog"
+msgstr ""
+
+#: app/templates/base.html:21
+msgid "Home"
+msgstr ""
+
+#: app/templates/base.html:33
+msgid "Login"
+msgstr ""
+
+#: app/templates/base.html:36 app/templates/messages.html:4
+msgid "Messages"
+msgstr ""
+
+#: app/templates/base.html:45
+msgid "Profile"
+msgstr ""
+
+#: app/templates/base.html:46
+msgid "Logout"
+msgstr ""
+
+#: app/templates/base.html:95
+msgid "Error: Could not contact server."
+msgstr ""
+
+#: app/templates/index.html:5
+#, python-format
+msgid "Hi, %(username)s!"
+msgstr ""
+
+#: app/templates/index.html:17 app/templates/user.html:47
+msgid "Newer posts"
+msgstr ""
+
+#: app/templates/index.html:22 app/templates/user.html:52
+msgid "Older posts"
+msgstr ""
+
+#: app/templates/messages.html:12
+msgid "Newer messages"
+msgstr ""
+
+#: app/templates/messages.html:17
+msgid "Older messages"
+msgstr ""
+
+#: app/templates/search.html:4
+msgid "Search Results"
+msgstr ""
+
+#: app/templates/search.html:12
+msgid "Previous results"
+msgstr ""
+
+#: app/templates/search.html:17
+msgid "Next results"
+msgstr ""
+
+#: app/templates/send_message.html:5
+#, python-format
+msgid "Send Message to %(recipient)s"
+msgstr ""
+
+#: app/templates/user.html:8
+msgid "User"
+msgstr ""
+
+#: app/templates/user.html:11 app/templates/user_popup.html:9
+msgid "Last seen on"
+msgstr ""
+
+#: app/templates/user.html:13 app/templates/user_popup.html:11
+#, python-format
+msgid "%(count)d followers"
+msgstr ""
+
+#: app/templates/user.html:13 app/templates/user_popup.html:11
+#, python-format
+msgid "%(count)d following"
+msgstr ""
+
+#: app/templates/user.html:15
+msgid "Edit your profile"
+msgstr ""
+
+#: app/templates/user.html:17
+msgid "Export your posts"
+msgstr ""
+
+#: app/templates/user.html:23 app/templates/user_popup.html:17
+msgid "Follow"
+msgstr ""
+
+#: app/templates/user.html:30 app/templates/user_popup.html:24
+msgid "Unfollow"
+msgstr ""
+
+#: app/templates/user.html:35
+msgid "Send private message"
+msgstr ""
+
+#: app/templates/auth/reset_password.html:5
+msgid "Reset Your Password"
+msgstr ""
+
+#: app/templates/errors/404.html:4
+msgid "Not Found"
+msgstr ""
+
+#: app/templates/errors/404.html:5 app/templates/errors/500.html:6
+msgid "Back"
+msgstr ""
+
+#: app/templates/errors/500.html:4
+msgid "An unexpected error has occurred"
+msgstr ""
+
+#: app/templates/errors/500.html:5
+msgid "The administrator has been notified. Sorry for the inconvenience!"
+msgstr ""
+
+#~ msgid "На паузе (не работает)"
+#~ msgstr ""
+
