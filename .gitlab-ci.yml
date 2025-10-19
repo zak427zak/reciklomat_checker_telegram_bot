@@ -28,7 +28,7 @@ docker_lint:
     - chmod +x /usr/local/bin/hadolint
     - hadolint Dockerfile
     - hadolint infrastructure/api/Dockerfile
-  only: [ main ]
+  only: [ master ]
 
 # -----------------------
 #         BUILD
@@ -37,7 +37,7 @@ docker_lint:
 build_reciklomat_bot:
   stage: build
   tags: [ main-runner ]
-  only: [ main ]
+  only: [ master ]
   before_script:
     - find . -name '__pycache__' -type d -exec rm -rf {} + || true
     - find . -name '*.pyc' -delete || true
@@ -53,7 +53,7 @@ build_reciklomat_bot:
 build_reciklomat_api:
   stage: build
   tags: [ main-runner ]
-  only: [ main ]
+  only: [ master ]
   before_script:
     - find . -name '__pycache__' -type d -exec rm -rf {} + || true
     - find . -name '*.pyc' -delete || true
@@ -84,7 +84,7 @@ sast_scan:
       sast: gl-sast-report.json
     paths:
       - gl-sast-report.json
-  only: [ main ]
+  only: [ master ]
 
 image_scan:
   image: docker:latest
@@ -103,7 +103,7 @@ image_scan:
     - ./bin/trivy image --exit-code 0 --severity HIGH,CRITICAL $RECIKLOMAT_BOT_IMAGE:latest
     - ./bin/trivy image --exit-code 0 --severity LOW,MEDIUM $RECIKLOMAT_API_IMAGE:latest
     - ./bin/trivy image --exit-code 0 --severity HIGH,CRITICAL $RECIKLOMAT_API_IMAGE:latest
-  only: [ main ]
+  only: [ master ]
 
 # -----------------------
 #         DEPLOY
@@ -112,7 +112,7 @@ image_scan:
 deploy_reciklomat_production:
   stage: deploy
   tags: [ main-runner ]
-  only: [ main ]
+  only: [ master ]
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
   script:
@@ -129,7 +129,7 @@ deploy_reciklomat_production:
 deploy_check:
   stage: post_deploy
   tags: [ main-runner ]
-  only: [ main ]
+  only: [ master ]
   needs: [ deploy_reciklomat_production ]
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
@@ -154,7 +154,7 @@ deploy_check:
 docker_cleanup:
   stage: post_deploy
   tags: [ main-runner ]
-  only: [ main ]
+  only: [ master ]
   needs: [ deploy_reciklomat_production ]
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
@@ -165,7 +165,7 @@ docker_cleanup:
 telegram_notification:
   stage: post_deploy
   tags: [ main-runner ]
-  only: [ main ]
+  only: [ master ]
   needs: [ deploy_check ]
   script:
     - BRANCH_ICON="🍻"
