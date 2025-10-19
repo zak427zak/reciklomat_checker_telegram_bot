@@ -8,7 +8,7 @@ async def my_reciklomats(message: Message):
     resp, code = get_all_or_my_reciklomats_service(message.from_user.id, "some")
     if code == 200:
         for item in resp:
-            await message.answer(text=item['text'])
+            await message.answer(text=item["text"])
     else:
         await message.answer(text=resp)
 

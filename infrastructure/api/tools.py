@@ -1,8 +1,6 @@
-
-
 def plural_days(n, what):
-    if what == 'recipes':
-        days = ['рецепт', 'рецепта', 'рецептов']
+    if what == "recipes":
+        days = ["рецепт", "рецепта", "рецептов"]
 
     if n % 10 == 1 and n % 100 != 11:
         p = 0
@@ -11,4 +9,4 @@ def plural_days(n, what):
     else:
         p = 2
 
-    return str(n) + ' ' + days[p]
+    return str(n) + " " + days[p]

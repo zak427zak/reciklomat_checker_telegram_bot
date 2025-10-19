@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   reciklomat_tg_bot:
     image: "bot"
@@ -48,7 +46,7 @@ services:
       - reciklomat_mysql
 
   reciklomat_mysql:
-    image: "mysql:8.0"
+    image: "mysql:9.2.0"
     env_file:
       - ".env"
     ports:

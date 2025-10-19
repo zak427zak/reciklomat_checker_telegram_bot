@@ -23,4 +23,6 @@ async def get_notifications_status(message: Message):
 def register_manage_subscription(dp: Dispatcher):
     dp.register_message_handler(turn_on_notifications, commands=["on"], state="*")
     dp.register_message_handler(turn_off_notifications, commands=["off"], state="*")
-    dp.register_message_handler(get_notifications_status, commands=["status"], state="*")
+    dp.register_message_handler(
+        get_notifications_status, commands=["status"], state="*"
+    )

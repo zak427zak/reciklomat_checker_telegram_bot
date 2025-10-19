@@ -54,14 +54,24 @@ class UserRepo(BaseRepo):
             self.session.commit()
         return user
 
-    def get_or_create_user(self, telegram_id: str, first_name: Optional[str] = None, last_name: Optional[str] = None,
-                           username: Optional[str] = None, registred_date: Optional[datetime] = None,
-                           last_seen: Optional[datetime] = None, is_telegram_on: bool = False, language: str = "en"):
+    def get_or_create_user(
+        self,
+        telegram_id: str,
+        first_name: Optional[str] = None,
+        last_name: Optional[str] = None,
+        username: Optional[str] = None,
+        registred_date: Optional[datetime] = None,
+        last_seen: Optional[datetime] = None,
+        is_telegram_on: bool = False,
+        language: str = "en",
+    ):
         """
         Creates or updates a new Reciklomat user in the database and returns the user object.
         """
         # Попытка найти пользователя по telegram_id
-        existing_user = self.session.query(User).filter(User.telegram_id == telegram_id).first()
+        existing_user = (
+            self.session.query(User).filter(User.telegram_id == telegram_id).first()
+        )
 
         if existing_user:
             # Если пользователь существует, обновить его данные
@@ -75,9 +85,16 @@ class UserRepo(BaseRepo):
             return existing_user
         else:
             # Если пользователь не найден, создаем нового
-            new_user = User(telegram_id=telegram_id, first_name=first_name, last_name=last_name, username=username,
-                            registred_date=registred_date or datetime.utcnow(),
-                            last_seen=last_seen or datetime.utcnow(), is_telegram_on=is_telegram_on, language=language)
+            new_user = User(
+                telegram_id=telegram_id,
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                registred_date=registred_date or datetime.utcnow(),
+                last_seen=last_seen or datetime.utcnow(),
+                is_telegram_on=is_telegram_on,
+                language=language,
+            )
             self.session.add(new_user)
             self.session.commit()
             return new_user

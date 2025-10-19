@@ -37,6 +37,7 @@ config.set_main_option(
     db_config.construct_sqlalchemy_url(),
 )
 
+
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
@@ -92,6 +93,7 @@ async def run_async_migrations() -> None:
 
     await connectable.dispose()
 
+
 def run_sync_migrations() -> None:
     """In this scenario we need to create an Engine
     and associate a connection with the context.
@@ -109,11 +111,13 @@ def run_sync_migrations() -> None:
 
     connectable.dispose()
 
+
 def run_migrations_online() -> None:
     """Run migrations in 'online' mode."""
 
-    #asyncio.run(run_async_migrations())
+    # asyncio.run(run_async_migrations())
     run_sync_migrations()
+
 
 if context.is_offline_mode():
     run_migrations_offline()

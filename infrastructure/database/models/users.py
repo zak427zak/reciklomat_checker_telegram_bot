@@ -32,10 +32,17 @@ class User(Base, TimestampMixin, TableNameMixin):
     first_name: Mapped[Optional[str]] = mapped_column(String(300))
     last_name: Mapped[Optional[str]] = mapped_column(String(300))
     username: Mapped[Optional[str]] = mapped_column(String(300))
-    registred_date: Mapped[Optional[datetime]] = mapped_column(DateTime, default=datetime.utcnow)
-    last_seen: Mapped[Optional[datetime]] = mapped_column(DateTime, default=datetime.utcnow)
-    language: Mapped[str] = mapped_column(Enum("en", "ru", "sr", name="user_language_enum"), nullable=False,
-                                          server_default="en")
+    registred_date: Mapped[Optional[datetime]] = mapped_column(
+        DateTime, default=datetime.utcnow
+    )
+    last_seen: Mapped[Optional[datetime]] = mapped_column(
+        DateTime, default=datetime.utcnow
+    )
+    language: Mapped[str] = mapped_column(
+        Enum("en", "ru", "sr", name="user_language_enum"),
+        nullable=False,
+        server_default="en",
+    )
 
     def __repr__(self):
         return f"<User {self.id} {self.username}>"

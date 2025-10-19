@@ -23,8 +23,14 @@ class DbConfig:
         if not port:
             port = self.port
 
-        uri = URL.create(drivername=f"mysql+{driver}", username=self.user, password=self.password, host=host, port=port,
-            database=self.database, )
+        uri = URL.create(
+            drivername=f"mysql+{driver}",
+            username=self.user,
+            password=self.password,
+            host=host,
+            port=port,
+            database=self.database,
+        )
         return uri.render_as_string(hide_password=False)
 
     @staticmethod
@@ -37,7 +43,9 @@ class DbConfig:
         user = env.str("MYSQL_USER")
         database = env.str("MYSQL_DATABASE")
         port = env.int("MYSQL_PORT")
-        return DbConfig(host=host, password=password, user=user, database=database, port=port)
+        return DbConfig(
+            host=host, password=password, user=user, database=database, port=port
+        )
 
 
 @dataclass
@@ -64,7 +72,19 @@ def load_config(path: str = None):
     env = Env()
     env.read_env(path)
 
-    return Config(tg_bot=TgBot(token=env.str("BOT_TOKEN"), admin_ids=env.int("ADMINS"), use_redis=env.bool("USE_REDIS"),
-        server_token=env.str("SERVER_TOKEN")),
-        db=DbConfig(host=env.str('MYSQL_HOST'), password=env.str('MYSQL_PASSWORD'), user=env.str('MYSQL_USER'),
-            database=env.str('MYSQL_DATABASE'), port=env.int('MYSQL_PORT'), ), misc=Miscellaneous())
+    return Config(
+        tg_bot=TgBot(
+            token=env.str("BOT_TOKEN"),
+            admin_ids=env.int("ADMINS"),
+            use_redis=env.bool("USE_REDIS"),
+            server_token=env.str("SERVER_TOKEN"),
+        ),
+        db=DbConfig(
+            host=env.str("MYSQL_HOST"),
+            password=env.str("MYSQL_PASSWORD"),
+            user=env.str("MYSQL_USER"),
+            database=env.str("MYSQL_DATABASE"),
+            port=env.int("MYSQL_PORT"),
+        ),
+        misc=Miscellaneous(),
+    )

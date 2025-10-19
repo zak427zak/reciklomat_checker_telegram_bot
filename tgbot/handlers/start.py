@@ -9,8 +9,8 @@ from tgbot.services.register_user import register_user_service
 async def start(message: Message):
     languages_keyboard = create_languages_keyboard("create")
     await message.answer(
-        "Hello! Choose your language:",
-        reply_markup=languages_keyboard)
+        "Hello! Choose your language:", reply_markup=languages_keyboard
+    )
 
 
 async def choose_language(call: CallbackQuery, callback_data: dict):
@@ -20,4 +20,6 @@ async def choose_language(call: CallbackQuery, callback_data: dict):
 
 def register_start(dp: Dispatcher):
     dp.register_message_handler(start, commands=["start"], state="*")
-    dp.register_callback_query_handler(choose_language, language_callback.filter(create_or_update="create"), state="*")
+    dp.register_callback_query_handler(
+        choose_language, language_callback.filter(create_or_update="create"), state="*"
+    )

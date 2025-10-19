@@ -8,9 +8,7 @@ from tgbot.services.set_language import set_language_service
 
 async def set_language(message: Message):
     languages_keyboard = create_languages_keyboard("update")
-    await message.answer(
-        "Choose your language:",
-        reply_markup=languages_keyboard)
+    await message.answer("Choose your language:", reply_markup=languages_keyboard)
 
 
 async def updated_language(call: CallbackQuery, callback_data: dict):
@@ -20,4 +18,6 @@ async def updated_language(call: CallbackQuery, callback_data: dict):
 
 def register_set_language(dp: Dispatcher):
     dp.register_message_handler(set_language, commands=["language"], state="*")
-    dp.register_callback_query_handler(updated_language, language_callback.filter(create_or_update="update"), state="*")
+    dp.register_callback_query_handler(
+        updated_language, language_callback.filter(create_or_update="update"), state="*"
+    )
