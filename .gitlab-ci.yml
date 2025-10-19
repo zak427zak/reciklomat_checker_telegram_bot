@@ -1,0 +1,179 @@
+stages:
+  - lint
+  - build
+  - scan
+  - deploy
+  - post_deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_BUILDKIT: 1
+  BUILDKIT_INLINE_CACHE: 1
+  GITLAB_ADVANCED_SAST_ENABLED: 'true'
+  RECIKLOMAT_BOT_IMAGE: "$CI_REGISTRY_IMAGE/${CI_COMMIT_BRANCH}/reciklomat_bot"
+  RECIKLOMAT_API_IMAGE: "$CI_REGISTRY_IMAGE/${CI_COMMIT_BRANCH}/reciklomat_api"
+
+# -----------------------
+#         LINT
+# -----------------------
+
+docker_lint:
+  image: alpine:latest
+  stage: lint
+  tags: [ main-runner ]
+  allow_failure: true
+  script:
+    - apk add --no-cache curl
+    - curl -L https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64 -o /usr/local/bin/hadolint
+    - chmod +x /usr/local/bin/hadolint
+    - hadolint Dockerfile
+    - hadolint infrastructure/api/Dockerfile
+  only: [ main ]
+
+# -----------------------
+#         BUILD
+# -----------------------
+
+build_reciklomat_bot:
+  stage: build
+  tags: [ main-runner ]
+  only: [ main ]
+  before_script:
+    - find . -name '__pycache__' -type d -exec rm -rf {} + || true
+    - find . -name '*.pyc' -delete || true
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  script:
+    - docker pull "$RECIKLOMAT_BOT_IMAGE:latest" || echo "No previous image, proceeding with build"
+    - if docker image inspect "$RECIKLOMAT_BOT_IMAGE:latest" >/dev/null 2>&1; then docker tag "$RECIKLOMAT_BOT_IMAGE:latest" "$RECIKLOMAT_BOT_IMAGE:previous"; fi
+    - docker build --cache-from="$RECIKLOMAT_BOT_IMAGE:latest" --tag "$RECIKLOMAT_BOT_IMAGE:latest" --tag "$RECIKLOMAT_BOT_IMAGE:$CI_COMMIT_SHA" -f Dockerfile .
+    - docker push "$RECIKLOMAT_BOT_IMAGE:previous" || true
+    - docker push "$RECIKLOMAT_BOT_IMAGE:latest"
+    - docker push "$RECIKLOMAT_BOT_IMAGE:$CI_COMMIT_SHA"
+
+build_reciklomat_api:
+  stage: build
+  tags: [ main-runner ]
+  only: [ main ]
+  before_script:
+    - find . -name '__pycache__' -type d -exec rm -rf {} + || true
+    - find . -name '*.pyc' -delete || true
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  script:
+    - docker pull "$RECIKLOMAT_API_IMAGE:latest" || echo "No previous image, proceeding with build"
+    - if docker image inspect "$RECIKLOMAT_API_IMAGE:latest" >/dev/null 2>&1; then docker tag "$RECIKLOMAT_API_IMAGE:latest" "$RECIKLOMAT_API_IMAGE:previous"; fi
+    - docker build --cache-from="$RECIKLOMAT_API_IMAGE:latest" --tag "$RECIKLOMAT_API_IMAGE:latest" --tag "$RECIKLOMAT_API_IMAGE:$CI_COMMIT_SHA" -f infrastructure/api/Dockerfile infrastructure/api
+    - docker push "$RECIKLOMAT_API_IMAGE:previous" || true
+    - docker push "$RECIKLOMAT_API_IMAGE:latest"
+    - docker push "$RECIKLOMAT_API_IMAGE:$CI_COMMIT_SHA"
+
+
+# -----------------------
+#         SCAN
+# -----------------------
+
+sast_scan:
+  image: returntocorp/semgrep:latest
+  stage: scan
+  tags: [ main-runner ]
+  allow_failure: true
+  script:
+    - semgrep --config=auto --json --output=gl-sast-report.json || echo "Semgrep analysis failed"
+    - test -f gl-sast-report.json || echo '{}' > gl-sast-report.json
+  artifacts:
+    reports:
+      sast: gl-sast-report.json
+    paths:
+      - gl-sast-report.json
+  only: [ main ]
+
+image_scan:
+  image: docker:latest
+  services: [ docker:dind ]
+  stage: scan
+  tags: [ main-runner ]
+  allow_failure: true
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  script:
+    - apk update && apk add --no-cache curl
+    - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
+    - ./bin/trivy image --exit-code 0 --severity LOW,MEDIUM $RECIKLOMAT_BOT_IMAGE:latest
+    - ./bin/trivy image --exit-code 0 --severity HIGH,CRITICAL $RECIKLOMAT_BOT_IMAGE:latest
+    - ./bin/trivy image --exit-code 0 --severity LOW,MEDIUM $RECIKLOMAT_API_IMAGE:latest
+    - ./bin/trivy image --exit-code 0 --severity HIGH,CRITICAL $RECIKLOMAT_API_IMAGE:latest
+  only: [ main ]
+
+# -----------------------
+#         DEPLOY
+# -----------------------
+
+deploy_reciklomat_production:
+  stage: deploy
+  tags: [ main-runner ]
+  only: [ main ]
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  script:
+    - docker pull "$RECIKLOMAT_BOT_IMAGE:latest"
+    - docker pull "$RECIKLOMAT_API_IMAGE:latest"
+    - docker stack deploy --with-registry-auth manage_subscriptions -c .docker-stack-compose.yml
+  environment:
+    name: production
+
+# -----------------------
+#     POST DEPLOY
+# -----------------------
+
+deploy_check:
+  stage: post_deploy
+  tags: [ main-runner ]
+  only: [ main ]
+  needs: [ deploy_reciklomat_production ]
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  script: |
+    sleep 15
+    check_stack() {
+      STACK_NAME=$1
+      echo "🔍 Проверяем стек: $STACK_NAME"
+      FAILED_SERVICES=$(docker service ls --format "{{.Name}} {{.Replicas}}" | grep "^${STACK_NAME}_" | awk '{split($2,a,"/"); if (a[1] != a[2]) print $1}')
+      if [ -n "$FAILED_SERVICES" ]; then
+        echo "❌ Упавшие сервисы в стеке $STACK_NAME:"
+        echo "$FAILED_SERVICES"
+        exit 1
+      else
+        echo "✅ Стек $STACK_NAME работает корректно!"
+      fi
+    }
+
+    check_stack "reciklomat"
+
+
+docker_cleanup:
+  stage: post_deploy
+  tags: [ main-runner ]
+  only: [ main ]
+  needs: [ deploy_reciklomat_production ]
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  script:
+    - docker image prune -af --filter "until=72h"
+
+
+telegram_notification:
+  stage: post_deploy
+  tags: [ main-runner ]
+  only: [ main ]
+  needs: [ deploy_check ]
+  script:
+    - BRANCH_ICON="🍻"
+    - NOTIFICATION_FLAG=""
+    - |
+      curl -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+        -d "chat_id=${TELEGRAM_CHAT_ID}" \
+        -d "parse_mode=Markdown" \
+        -d "disable_web_page_preview=true" \
+        ${NOTIFICATION_FLAG} \
+        -d "text=🚀 *Deployment:* ${CI_JOB_STATUS}%0A🏗 *Project:* [${CI_PROJECT_PATH_SLUG}](https://git.thebell.io/${CI_PROJECT_PATH})%0A${BRANCH_ICON} *Branch:* ${CI_COMMIT_BRANCH}%0A🔗 [Pipeline Details](https://git.thebell.io/${CI_PROJECT_PATH}/-/pipelines/${CI_PIPELINE_ID})"
