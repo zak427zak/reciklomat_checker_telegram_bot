@@ -137,7 +137,7 @@ deploy_check:
     sleep 15
     check_stack() {
       STACK_NAME=$1
-      echo "🔍 Проверяем стек: $STACK_NAME"
+      echo "🔍 Проверяем стек $STACK_NAME"
       FAILED_SERVICES=$(docker service ls --format "{{.Name}} {{.Replicas}}" | grep "^${STACK_NAME}_" | awk '{split($2,a,"/"); if (a[1] != a[2]) print $1}')
       if [ -n "$FAILED_SERVICES" ]; then
         echo "❌ Упавшие сервисы в стеке $STACK_NAME:"
